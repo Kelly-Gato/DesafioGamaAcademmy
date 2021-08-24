@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="css/estilo.css">
+
+</head>
+<body>
+    <div class="content">
+        <form action="">
+            <fieldset>
+    
+                <legend>Dados Pessoais</legend>
+                <div class="row">
+                    <label for="nome">Nome Completo*</label>
+                    <input type="text" id="nome" name="nome" autocomplete="off" required>
+                
+                    <label for="cargo">Cargo Prentendido*</label>
+                    <input type="text" id="cargo" name="cargo" required>
+                </div>
+            
+                <div class="row">
+                    <label for="email">E-mail*</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            
+                <div class="row">
+                    <label for="dtnasc">Data de Nascimento*</label>
+                    <input type="date" id="dtnasc" name="dtnasc" required>
+                
+                    <label for="filhos">Filhos</label>
+                    <input type="number" id="filhos" name="filhos" max="10" min="0" required>
+                </div>
+            
+                <div class="row">
+                    <label for="contato1">Contato 1</label>
+                    <input type="number" id="contato1" name="contato1" placeholder="(__) ____-____" required>
+            
+                    <label for="contato2">Contato 2</label>
+                    <input type="number" id="contato2" name="contato2" placeholder="(__) ____-____">
+                </div>
+            
+                <div class="row">
+                    <label for="sexo">Sexo*</label>
+                        <select class="form-select" id="autoSizingSelect">
+                          <option value="1">Selecione</option>
+                          <option value="1">Feminino</option>
+                          <option value="2">Masculino</option>
+                          <option value="3">Não-binário</option>
+                          <option value="2">Outros</option>
+                          <option value="3">Prefiro não responder</option>
+                        </select>
+                
+                    <label for="estadocivil">Estado Civil*</label>
+                        <select class="form-select" id="autoSizingSelect">
+                          <option value="1">Selecione</option>
+                          <option value="1">Solteiro</option>
+                          <option value="2">Casado</option>
+                          <option value="3">Amigado</option>
+                          <option value="2">Divorciado</option>
+                        </select>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Endereço</legend>
+                <script>
+                  
+                    function limpa_formulário_cep() {
+                            //Limpa valores do formulário de cep.
+                            document.getElementById('rua').value=("");
+                            document.getElementById('bairro').value=("");
+                            document.getElementById('cidade').value=("");
+                            document.getElementById('uf').value=("");
+                            
+                    }
+                
+                    function meu_callback(conteudo) {
+                        if (!("erro" in conteudo)) {
+                            //Atualiza os campos com os valores.
+                            document.getElementById('rua').value=(conteudo.logradouro);
+                            document.getElementById('bairro').value=(conteudo.bairro);
+                            document.getElementById('cidade').value=(conteudo.localidade);
+                            document.getElementById('uf').value=(conteudo.uf);
+                          
+                        } //end if.
+                        else {
+                            //CEP não Encontrado.
+                            limpa_formulário_cep();
+                            alert("CEP não encontrado.");
+                        }
+                    }
+                        
+                    function pesquisacep(valor) {
+                
+                        //Nova variável "cep" somente com dígitos.
+                        var cep = valor.replace(/\D/g, '');
+                
+                        //Verifica se campo cep possui valor informado.
+                        if (cep != "") {
+                
+                            //Expressão regular para validar o CEP.
+                            var validacep = /^[0-9]{8}$/;
+                
+                            //Valida o formato do CEP.
+                            if(validacep.test(cep)) {
+                
+                                //Preenche os campos com "..." enquanto consulta webservice.
+                                document.getElementById('rua').value="...";
+                                document.getElementById('bairro').value="...";
+                                document.getElementById('cidade').value="...";
+                                document.getElementById('uf').value="...";
+                                
+                
+                                //Cria um elemento javascript.
+                                var script = document.createElement('script');
+                
+                                //Sincroniza com o callback.
+                                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+                
+                                //Insere script no documento e carrega o conteúdo.
+                                document.body.appendChild(script);
+                
+                            } //end if.
+                            else {
+                                //cep é inválido.
+                                limpa_formulário_cep();
+                                alert("Formato de CEP inválido.");
+                            }
+                        } //end if.
+                        else {
+                            //cep sem valor, limpa formulário.
+                            limpa_formulário_cep();
+                        }
+                    };
+                
+                    </script>
+                    
+                    <form method="get" action=".">
+                        <label>Cep:
+                        <input name="cep" type="text" id="cep" value="" size="10" maxlength="9"
+                               onblur="pesquisacep(this.value);" placeholder="______-____"/></label>
+                        <label>Rua:
+                        <input name="rua" type="text" id="rua"/></label>
+                        <label>Numero:
+                        <input name="numero" type="number" id="numero" /></label><br />
+                       
+                        <label>Bairro:
+                        <input name="bairro" type="text" id="bairro"/></label>
+                        <label>Complemento:
+                        <input name="complemento" type="text" id="complemento"/></label><br />
+
+                        <label>Cidade:
+                        <input name="cidade" type="text" id="cidade"/></label>
+                        <label>Estado:
+                        <input name="uf" type="text" id="uf" size="2" /></label><br />
+                        
+                      </form>
+                
+            </fieldset>
+            
+            
+            
+            <fieldset>
+                <legend>Documentos</legend>
+            
+                <div class="row">
+                    <label for="rg">Identidade*</label>
+                    <input type="number" id="rg" name="rg" placeholder="__.___.___-_" required>
+                </div>
+            
+                <div class="row">
+                    <label for="cpf">CPF</label>
+                    <input type="number" id="cpf" name="cpf" placeholder="___.___.___-__" required>
+                </div>
+            
+                <div class="row">
+                    <label for="CNH-A">Carta de Habilitação*</label>
+                    <input type="radio" value="CNH-A" id="CNH-A" name="habilitação">
+                    <label for="CNH-B">A</label>
+                    <input type="radio" value="CNH-B" id="CNH-B" name="habilitação">
+                    <label for="CNH-C">B</label>
+                    <input type="radio" value="CNH-C" id="CNH-C" name="habilitação">
+                    <label for="CNH-AB">C</label>
+                    <input type="radio" value=c id="CNH-AB" name="habilitação">
+                    <label for="CNH-AB">A/B</label>
+                    <input type="radio" value="não" id="não" name="habilitação">
+                    <label for="não">Não</label>
+                </div>
+            
+                <div class="row">
+                    <label  for="">Possui Veículo</label>
+                    <input type="radio" value="sim" id="sim" name="veiculo">
+                    <label for="">Sim</label>
+                    <input type="radio" value="não" id="não" name="veiculo">
+                    <label for="">Não</label>
+                </div>
+            
+            </fieldset>
+            
+            <fieldset>
+                <legend>Sobre Você</legend>
+            
+                <div class="row">
+                    <label for="linkedin">Linkedin:</label>
+                    <input type="link" id="linkedin" name="linkedin">
+                
+                  <label for="twitter">Twitter:</label>
+                  <input type="link" id="twitter" name="twitter">
+              </div>
+
+                <div class="row">
+                    <label for="face">Facebook:</label>
+                    <input type="link" id="face" name="face">
+                
+                    <label for="insta">Instagram:</label>
+                    <input type="link" id="insta" name="insta">
+                </div>
+            
+                
+            
+                <div class="row">
+                    <label for="youtube"> Youtube:</label>
+                    <input type="link" id="youtube" name="youtube">
+                
+                  <label for="link">Link do vídeo</label>
+                  <input type="link" id="link" name="link">
+              </div>
+            
+                <div class="row">
+                    <label for="file">Vídeo Pitch</label>
+                    <input type="file" id="file" name="file">
+                </div> 
+            
+                
+            
+            </fieldset>
+            
+            
+                <div class="button">
+                    <input type="submit">
+                </div>
+
+                
+        </form>
+    </div>
+    
+    
+
+
+</body>
+</html>
