@@ -1,0 +1,24 @@
+{
+  "name": "desafiogamaacademy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "formulario.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "query-string": "^7.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kelly-Gato/DesafioGamaAcademmy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kelly-Gato/DesafioGamaAcademmy/issues"
+  },
+  "homepage": "https://github.com/Kelly-Gato/DesafioGamaAcademmy#readme"
+}
